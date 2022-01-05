@@ -31,5 +31,9 @@
 *.out
 *.app
 
+<<<<<<< HEAD
 # Appname
+=======
+# APPNAME
+>>>>>>> 8d5452ff976d65dd2e8f136f0acdc9c26e003bec
 oscarfish
