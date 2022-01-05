@@ -1,7 +1,7 @@
 CC = g++
 CXXFLAGS = -std=c++14 -Wall
 
-APPNAME = oscar
+APPNAME = oscarfish
 EXT = .cpp
 SRCDIR = src
 OBJDIR = obj
