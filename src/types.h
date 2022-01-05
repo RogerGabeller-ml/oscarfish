@@ -1,6 +1,12 @@
 #if !defined(TYPES_H_)
 #define TYPES_H_
 
+#include <assert.h>
+#include <stack>
+#include <string>
+#include <vector>
+
+
 namespace Oscarfish
 {
 
@@ -46,10 +52,15 @@ enum Direction {
     NORTH_WEST = NORTH + WEST,
     NORTH_EAST = NORTH + EAST,
     SOUTH_WEST = SOUTH + WEST,
-    SOUTH_EAST = SOUTH + EAST
+    SOUTH_EAST = SOUTH + EAST,
+
+    DIRECTIONS = 10
 };
 
-typedef int move;
+typedef int Move;
+typedef std::vector<Move> MoveList;
+
+typedef std::stack<Move> MoveHistory;
 
 
 #define ENABLE_INCR_OPERATORS(T)                            \
@@ -61,14 +72,6 @@ ENABLE_INCR_OPERATORS(Rank)
 ENABLE_INCR_OPERATORS(Square)
 
 #undef ENABLE_INCR_OPERATORS
-
-inline Rank in_rank(Square sq) {
-    return Rank((int)sq / 8);
-}
-
-inline File in_file(Square sq) {
-    return File((int)sq % 8);
-}
 
 } // namespace Oscarfish
 
