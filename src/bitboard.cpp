@@ -1,5 +1,5 @@
 #include "bitboard.h"
-#include <iostream>
+
 
 namespace Oscarfish
 {
@@ -9,8 +9,11 @@ namespace Oscarfish
 std::string Bitboards::pretty(Bitboard b) {
 
     std::string s = "+---+---+---+---+---+---+---+---+\n";
+
     for (Rank r = RANK_8; r >= RANK_1; --r) {
+
         for (File f = FILE_A; f < FILES; ++f) {
+
             s += b & make_square(r, f) ? "| X " : "|   ";
         }
         s += "| " + std::to_string(r + 1) + "\n+---+---+---+---+---+---+---+---+\n";
@@ -22,7 +25,10 @@ Bitboard pseduoAttacks[PIECES][SQUARES];
 Bitboard squareBoards[SQUARES];
 
 
-// Initialises pseduoAttacks' bitboards for easy lookup when masking
+/* Initialises:
+ * - pseduoAttacks' bitboards for easy lookup when masking, for move generation
+   - squareBoards' bitboards for masking a single square
+ */
 
 void Bitboards::init() {
 
@@ -56,7 +62,7 @@ void Bitboards::init() {
             }
         }
 
-        // QUEEN Attacks (ROOK | BISHOP)
+        // QUEEN Attacks (= ROOK | BISHOP)
         pseduoAttacks[QUEEN][sq] = pseduoAttacks[ROOK][sq] | pseduoAttacks[BISHOP][sq];
 
         // KING Attacks
@@ -65,6 +71,19 @@ void Bitboards::init() {
 
             pseduoAttacks[KING][sq] |= shift<Direction>(d, square_bb(sq));
         } 
+
+        // KNIGTH Attacks
+
+        Bitboard east, west;
+
+        east                       = shift<Direction>(EAST, square_bb(sq));
+        west                       = shift<Direction>(WEST, square_bb(sq));
+        pseduoAttacks[KNIGHT][sq]  = (east|west) << 16;
+        pseduoAttacks[KNIGHT][sq] |= (east|west) >> 16;
+        east                       = shift<Direction>(EAST, east);
+        west                       = shift<Direction>(WEST, west);
+        pseduoAttacks[KNIGHT][sq] |= (east|west) <<  8;
+        pseduoAttacks[KNIGHT][sq] |= (east|west) >>  8;
 
         // PAWN Attacks (Can only be generated in one direction ie WHITE)
         for (Direction d : {NORTH_WEST, NORTH_EAST}) {

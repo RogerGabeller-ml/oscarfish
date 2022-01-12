@@ -2,7 +2,7 @@
 #define BITBOARD_H_
 
 #include "types.h"
-#include <iostream>
+
 
 namespace Oscarfish
 {
@@ -48,17 +48,13 @@ constexpr Bitboard shift(D s, Bitboard b) {
 }
 
 
-inline Bitboard square_bb(int sq) {
-  if (sq > SQ_H8 || sq < SQ_A1) { return 0; }
-  assert(squareBoards[sq]);
+inline Bitboard square_bb(Square sq) { 
   return squareBoards[sq]; 
 }
 
-
-inline Bitboard square_bb(Square sq) { 
-  return square_bb((int)sq); 
+inline Bitboard square_bb(int sq) { 
+  return squareBoards[sq]; 
 }
-
 
 inline Bitboard make_square(Rank r, File f) { 
   return square_bb((r << 3) + f); 

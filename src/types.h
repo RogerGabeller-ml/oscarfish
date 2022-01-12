@@ -1,7 +1,6 @@
 #if !defined(TYPES_H_)
 #define TYPES_H_
 
-#include <assert.h>
 #include <stack>
 #include <string>
 #include <vector>
@@ -16,6 +15,14 @@ enum Piece {
     PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING,
 
     PIECES
+};
+
+enum Colour {
+    BLACK, 
+    COL_NULL,
+    WHITE,
+
+    COLOURS
 };
 
 enum Square {
@@ -61,6 +68,13 @@ typedef int Move;
 typedef std::vector<Move> MoveList;
 
 typedef std::stack<Move> MoveHistory;
+
+enum Flag {
+    QUIET, DOUBLE_PUSH, K_CASTLE, Q_CASTLE,
+    CAPTURE, EP_CAP, N_PROMO, B_PROMO, 
+    R_PROMO, Q_PROMO, N_PROMO_CAP = 8, B_PROMO_CAP, 
+    R_PROMO_CAP, Q_PROMO_CAP
+};
 
 
 #define ENABLE_INCR_OPERATORS(T)                            \
